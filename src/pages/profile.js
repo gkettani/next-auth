@@ -23,10 +23,14 @@ export async function getServerSideProps(context) {
 
 function Profile({ session }) {
   return (
-    <>
-      <div>Welcome {session.user.name}</div>
-      <button onClick={() => signOut({ callbackUrl: 'http://localhost:3000/'})}>Sign Out</button>
-    </>
+    <div className="bg-[#F7F4ED] w-full h-screen">
+      <div className="text-2xl w-fit m-auto py-10 font-semibold">Welcome {session.user.name}</div>
+      <button 
+        className="m-auto border block p-2 rounded-md bg-white shadow-md hover:bg-slate-100" 
+        onClick={() => signOut({ callbackUrl: 'http://localhost:3000/'})}>
+          Log out
+        </button>
+    </div>
   )
 }
 

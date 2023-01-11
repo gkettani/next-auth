@@ -11,11 +11,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1 className="">
+      <main className="bg-[#F7F4ED] w-full h-screen">
+        <h1 className="text-2xl w-fit m-auto py-10 font-semibold">
           This is a public page. You can see it without being authenticated.
         </h1>
-        <button className="" onClick={() => signIn()}>Sign In</button>
+        <button className="m-auto border block p-2 rounded-md bg-white shadow-md hover:bg-slate-100" onClick={() => signIn()}>Sign In</button>
       </main>
     </>
   )

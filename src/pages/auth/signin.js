@@ -2,50 +2,57 @@ import { signIn, getCsrfToken, getProviders } from 'next-auth/react';
 
 export default function SignIn({ csrfToken, providers }) {
   return (
-    <div className="flex flex-col items-center m-auto mt-20 border p-10 gap-6 max-w-md">
-      <h1 className="text-2xl font-bold">Sign in</h1> 
-      <form 
-        className='flex flex-col w-full gap-3'
-        method="post" 
-        action="/api/auth/signin/email">
-        <h2>Sign in with magic link</h2>
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <input name="callbackUrl" type="hidden" defaultValue="http://localhost:3000/profile" />
-        <label>
-          Email address
-        </label>
-        <input className='border' type="email" name="email" />
-        <button className='border px-3 py-1 shadow rounded-md' 
-          type="submit" 
-          >Sign in</button>
-      </form>
-      <hr className='w-full' />
+    <div className="w-full h-screen flex justify-center items-center bg-[#F7F4ED]">
+      <div className="flex flex-col items-center border p-10 gap-6 max-w-md w-[400px] rounded-sm bg-white">
+        <h1 className="text-4xl font-bold">Sign in</h1> 
+        <form 
+          className='flex flex-col w-full'
+          method="post" 
+          action="/api/auth/signin/email">
+          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+          <input name="callbackUrl" type="hidden" defaultValue="http://localhost:3000/profile" />
+          <label className="text-sm font-thin">
+            Email
+          </label>
+          <input className="border h-8 rounded-md bg-slate-100" type="email" name="email" />
+          <button 
+            className='border px-3 py-1 shadow rounded-md my-4
+             border-yellow-500 bg-yellow-100 text-yellow-600 font-semibold hover:bg-yellow-400 hover:text-white'
+            type="submit" 
+            >Sign in with Email</button>
+        </form>
 
-      <form
-        className="flex flex-col w-full gap-3" 
-        method="post" 
-        action="/api/auth/callback/credentials">
-        <h2>Sign in with credentials</h2>
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <input name="callbackUrl" type="hidden" defaultValue="http://localhost:3000/profile" />
-        <label>
-          Username
-        </label>
-        <input className="border" type="text" name="username" />
-        <label>
-          Password
-        </label>
-        <input className="border" type="password" name="password" />
-        <button className='border px-3 py-1 shadow rounded-md'
-          type="submit" 
-          >Sign in</button>
-      </form>
+        <hr className='w-full' />
 
-      <button
-        className='border px-3 py-1 shadow rounded-md w-full' 
-        onClick={() => signIn('discord', { callbackUrl: "http://localhost:3000/profile" })}>
-        Sign in with Discord
-      </button>
+        <form
+          className="flex flex-col w-full" 
+          method="post" 
+          action="/api/auth/callback/credentials">
+          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+          <input name="callbackUrl" type="hidden" defaultValue="http://localhost:3000/profile" />
+          <label className="text-sm font-thin">
+            Username
+          </label>
+          <input className="border h-8 rounded-md bg-slate-100" type="text" name="username" />
+          <label className="text-sm font-thin mt-2">
+            Password
+          </label>
+          <input className="border h-8 rounded-md bg-slate-100" type="password" name="password" />
+          <button 
+            className='border px-3 py-1 shadow rounded-md my-4
+             border-yellow-500 bg-yellow-100 text-yellow-600 font-semibold hover:bg-yellow-400 hover:text-white'
+            type="submit" 
+            >Sign in with credentials</button>
+          <a className="underline text-sm text-gray-400" href="/auth/forgot-password">Forgot password?</a>
+        </form>
+
+        <hr className='w-full' />
+        <button
+          className='border px-3 py-1 shadow rounded-md w-full hover:bg-gray-100' 
+          onClick={() => signIn('discord', { callbackUrl: "http://localhost:3000/profile" })}>
+          Sign in with Discord
+        </button>
+      </div>
     </div>
   )
 }
