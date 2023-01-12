@@ -1,8 +1,9 @@
-import { signIn, getCsrfToken, getProviders } from 'next-auth/react';
+import { signIn, getCsrfToken, getProviders, getSession } from 'next-auth/react';
 
-export default function SignIn({ csrfToken, providers }) {
+export default function SignIn({ csrfToken, providers, error }) {
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-[#F7F4ED]">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-[#F7F4ED]">
+      {error && <span className='borde my-5 bg-white p-5 rounded-md'>{error}</span>}
       <div className="flex flex-col items-center border p-10 gap-6 max-w-md w-[400px] rounded-sm bg-white">
         <h1 className="text-4xl font-bold">Sign in</h1> 
         <form 
@@ -59,12 +60,28 @@ export default function SignIn({ csrfToken, providers }) {
 
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/profile',
+        permanent: false,
+      }
+    }
+  }
+  let error = null;
+  if (context.req.url.includes('error=')) {
+    error = context.req.url.split('error=')[1].split('&')[0];
+  }
+
   const providers = await getProviders()
   const csrfToken = await getCsrfToken(context)
   return {
     props: {
       providers,
-      csrfToken
+      csrfToken,
+      error
     },
   }
 }
